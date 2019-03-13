@@ -59,6 +59,7 @@ public class OptionsWindow {
   private JComboBox jcbOutputFontSize;
   private JComboBox jcbCodeFontSize;
   private JDialog dialog;
+  private boolean accOptions = false;
 
   private SettingsManager sm = SettingsManager.getInstance();
   private WindowManager wm = WindowManager.getInstance();
@@ -156,6 +157,9 @@ public class OptionsWindow {
     tabOptions.addTab("Haskell Interpreter", panelInterpreter);
     tabOptions.addTab("Property Tests", panelTest);
     tabOptions.addTab("Font Sizes", panelFontSizes);
+	if (accOptions) {
+		tabOptions.setSelectedIndex(2);
+	}
     
     // buttons for applying options and cancellation
     JButton buttonApply = new JButton("Apply");
@@ -193,6 +197,16 @@ public class OptionsWindow {
     dialog.setLocationRelativeTo(wm.getMainScreenFrame());
     dialog.setVisible(true);
   }
+  
+  public void showAcc() {
+    accOptions = true;
+    try {
+        jbInit();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    show();
+	  }
 
   /**
    * Closes the options window

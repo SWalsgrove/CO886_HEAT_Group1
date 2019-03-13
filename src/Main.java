@@ -17,6 +17,7 @@ import managers.FileManager;
 import managers.InterpreterManager;
 import managers.SettingsManager;
 import managers.WindowManager;
+import view.windows.AccessibilityPopUp;
 import managers.UndoManager;
 import java.util.logging.Logger;
 import java.util.logging.FileHandler;
@@ -50,6 +51,7 @@ public static void main(String[] args) {
 	  
     SettingsManager sm = SettingsManager.getInstance();
     WindowManager wm = WindowManager.getInstance();
+    
 
     sm.loadSettings();
     WindowManager.setLookAndFeel();
@@ -79,6 +81,7 @@ public static void main(String[] args) {
         wm.getConsoleWindow().getFocus();
     }
     wm.setVisible();
+    AccessibilityPopUp ap = new AccessibilityPopUp();
    }
 }
   

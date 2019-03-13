@@ -1,12 +1,18 @@
 package view.windows;
 
+import managers.ActionManager;
+import managers.SettingsManager;
+import managers.WindowManager;
+
+import utils.Settings;
+
+import view.dialogs.FileDialogs;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.io.IOException;
 
-import managers.SettingsManager;
-import managers.WindowManager;
 
 
 
@@ -66,12 +72,16 @@ public class AccessibilityPopUp {
 	        }
 	    });
 	    
-	    
-	    
 	    JLabel bottom = new JLabel("<html><div style='text-align: center;'>You can also change Accessibility Options later<br/>from the Options menu.</div></html>");
-		bottom.setBounds(0, 100, 800, 400);
+		bottom.setBounds(0, 250, 800, 100);
 		bottom.setFont(new Font("SansSerif", Font.PLAIN, 24));
 		bottom.setHorizontalAlignment(JLabel.CENTER);
+		
+		JPanel checkBox = new JPanel();
+		JCheckBox notShow = new JCheckBox("Do not show this dialog box again");
+		checkBox.add(notShow);
+		checkBox.setBounds(0, 350, 800, 100);
+		checkBox.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		
 	    buttons.add(yes);
 	    buttons.add(no);
@@ -80,6 +90,7 @@ public class AccessibilityPopUp {
 	    cont.add(top);
 		cont.add(buttons);
 		cont.add(bottom);
+		cont.add(checkBox);
 		centre(accPopUp);
 		accPopUp.setVisible(true);
 	}

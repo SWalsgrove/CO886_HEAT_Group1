@@ -105,6 +105,7 @@ public class SettingsManager {
     newSettings.setProperty(Settings.INTERPRETER_OPTS,"");
     newSettings.setProperty(Settings.TEST_FUNCTION,"");
     newSettings.setProperty(Settings.TEST_POSITIVE,"True");
+    newSettings.setProperty(Settings.ACCESSIBILITY_POP_UP,"False");
     return newSettings;
   }
   

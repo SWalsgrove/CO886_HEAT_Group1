@@ -51,6 +51,11 @@ public class Settings {
    * The font style used in the display window
    */
   public static final String CONSOLE_FONT_STYLE = "CONSOLE_FONT_STYLE";
+  
+  /**
+   * Whether or not the Accessibility pop-up has been disabled
+   */
+  public static final String ACCESSIBILITY_POP_UP = "ACCESSIBILITY_POP_UP";
 
   /*
    * For Boolean unit tests or QuickCheck

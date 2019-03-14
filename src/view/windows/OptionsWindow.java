@@ -313,19 +313,14 @@ public class OptionsWindow {
 	  	
 	  	
 	    JCheckBox checkbox = (JCheckBox) jColorBlind;
-	    if (checkbox.isSelected()) {
-	    	System.out.println("Checkbox is clicked");
-	    	checkbox.setBackground(Color.RED);
-
-//how to link this?
-	    	//jtaInterpreterOutput.setBackground(Color.BLACK);
-	        //StyleConstants.setForeground(normalText, Color.WHITE);
-	    
-	    	
+	    if (checkbox.isSelected()) { 
+	  
+	    	wm.getConsoleWindow().NightMode();
+  	
 	    	} else {
 	    		
-	    	System.out.println("Checkbox is unclicked")	;
-	    		
+	    	wm.getConsoleWindow().NormalMode();
+	    	
 	    	}
 	    
 	    jColorBlind.setSelected(true);

@@ -97,15 +97,41 @@ public class ConsoleWindow {
     }
   }
 
+ public void NormalMode() {
+	  jtaInterpreterOutput.repaint();
+	  jtaInterpreterOutput.setBackground(Color.WHITE);
+	  StyleConstants.setForeground(errorText,Color.RED);
+	  StyleConstants.setForeground(infoText,Color.BLUE);
+	  StyleConstants.setForeground(normalText, Color.BLACK);
+	  StyleConstants.setForeground(inputText,Color.DARK_GRAY);
+	  //jspMain.getViewport().add(jtaInterpreterOutput, null);
+	  jtaInterpreterOutput.repaint();
+		  
+  }
+  
+  public void NightMode() {
+	  jtaInterpreterOutput.repaint();
+	  jtaInterpreterOutput.setBackground(Color.DARK_GRAY);
+	  StyleConstants.setForeground(errorText,Color.RED);
+	  StyleConstants.setForeground(infoText,Color.WHITE);
+	  StyleConstants.setForeground(normalText, Color.WHITE);
+	  StyleConstants.setForeground(inputText,Color.CYAN);
+	  //jspMain.getViewport().add(jtaInterpreterOutput, null);
+	 
+	 }
+  
+  
+  
   private void jbInit() throws Exception {
     jspMain.setMinimumSize(new Dimension(0, 0));
     jspMain.setPreferredSize(new Dimension(100,150));
     jspMain.setAutoscrolls(true);
-    jtaInterpreterOutput.setBackground(Color.BLACK);
-    StyleConstants.setForeground(normalText, Color.WHITE);
+    
+    jtaInterpreterOutput.setBackground(Color.WHITE);
+    StyleConstants.setForeground(normalText, Color.BLACK);
     StyleConstants.setForeground(errorText,Color.RED);
     StyleConstants.setForeground(infoText,Color.BLUE);
-    StyleConstants.setForeground(inputText,Color.WHITE);
+    StyleConstants.setForeground(inputText,Color.BLACK);
     StyleConstants.setForeground(promptText,new Color(0,150,0));
     StyleConstants.setBold(inputText,true);
     jtaInterpreterOutput.setEditable(true);

@@ -701,6 +701,7 @@ public class ActionManager {
       String interpreterOpts = wm.getOptionsWindow().getInterpreterOpts();
       String libraryPath = wm.getOptionsWindow().getLibraryPath();
       String outputFontSize = wm.getOptionsWindow().getOuputFontSize();
+      String outputFontStyle = wm.getOptionsWindow().getConsoleFontStyle();
       String codeFontSize = wm.getOptionsWindow().getCodeFontSize();
       SettingsManager sm = SettingsManager.getInstance();
       InterpreterManager im = InterpreterManager.getInstance();
@@ -720,7 +721,7 @@ public class ActionManager {
       /* Perform any font updates */
       try {
         int outputFontsize = Integer.parseInt(outputFontSize);
-        wm.getConsoleWindow().setFontSize(outputFontsize);
+        wm.getConsoleWindow().setFontSize(outputFontsize, outputFontStyle);
         sm.setSetting(Settings.OUTPUT_FONT_SIZE, outputFontSize);
       } catch (NumberFormatException nfe) {
         log.warning("[ActionManager] - Failed to parse " +
@@ -729,7 +730,7 @@ public class ActionManager {
 
       try {
         int codeFontsize = Integer.parseInt(codeFontSize);
-        wm.getEditorWindow().setFontSize(codeFontsize);
+        wm.getEditorWindow().setFontSize(codeFontsize, outputFontStyle);
         sm.setSetting(Settings.CODE_FONT_SIZE, codeFontSize);
       } catch (NumberFormatException nfe) {
         log.warning("[ActionManager] - Failed to parse " +

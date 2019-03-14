@@ -121,8 +121,9 @@ public class ConsoleWindow {
     
     /* Use font size from settings if it exists */
     String fontSize = sm.getSetting(Settings.OUTPUT_FONT_SIZE);
-
-    if ((fontSize != null) && (fontSize != "")) {
+    String fontStyle = sm.getSetting(Settings.CONSOLE_FONT_STYLE);
+    
+    if ((fontSize != null) && (fontSize != "") && (fontStyle != null)) {
       try {
         int size = Integer.parseInt(fontSize);
         displayFont = new Font(Font.MONOSPACED, Font.PLAIN, size);
@@ -260,8 +261,8 @@ public class ConsoleWindow {
    *
    * @param ptSize desired font size
    */
-  public void setFontSize(int ptSize) {
-    jtaInterpreterOutput.setFont(new Font(Font.MONOSPACED, Font.PLAIN, ptSize));
+  public void setFontSize(int ptSize, String ptStyle) {
+    jtaInterpreterOutput.setFont(new Font(ptStyle, Font.PLAIN, ptSize));
     jtaInterpreterOutput.repaint();
   }
 

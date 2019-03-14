@@ -30,6 +30,7 @@ import view.dialogs.FileDialogs;
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -58,6 +59,7 @@ public class OptionsWindow {
   private JTextField jTextFieldTestPositive;
   private JComboBox jcbOutputFontSize;
   private JComboBox jcbCodeFontSize;
+  private JComboBox jcbConsoleFontStyle;
   private JDialog dialog;
   private boolean accOptions = false;
 
@@ -134,11 +136,21 @@ public class OptionsWindow {
     testPositive.add(jTextFieldTestPositive);
     panelTest.add(testPositive);
     
-    // panel for setting font sizes
+    // panel for setting font sizes and font styles
     JPanel panelFontSizes = new JPanel(new GridLayout(0,1));
     jcbOutputFontSize = new JComboBox();
     jcbCodeFontSize = new JComboBox();
- /* Populate the font size combo boxes */
+    jcbConsoleFontStyle= new JComboBox();
+    
+   //Populate the font style combo box with dyslexia friendly options
+    
+    String[] fonts = {"Monospaced", "Arial","Helvetica","Verdana", "Serif"};
+
+    for (int i = 0; i < fonts.length; i++) {
+    jcbConsoleFontStyle.addItem(String.valueOf(fonts[i]));
+    }
+    
+  /*Populate the font size combo boxes */
     for (int i = 10; i < 25; i++) {
       jcbOutputFontSize.addItem(String.valueOf(i));
       jcbCodeFontSize.addItem(String.valueOf(i));
@@ -149,6 +161,10 @@ public class OptionsWindow {
     JPanel interpreterFontSize = new JPanel();
     interpreterFontSize.add(new JLabel("Interpreter font size:"));
     interpreterFontSize.add(jcbOutputFontSize);
+    JPanel consoleFontStyle = new JPanel();
+    consoleFontStyle.add(new JLabel("Editor font style:"));
+    consoleFontStyle.add(jcbConsoleFontStyle);
+    panelFontSizes.add(consoleFontStyle);
     panelFontSizes.add(editorFontSize);
     panelFontSizes.add(interpreterFontSize);
     
@@ -156,7 +172,7 @@ public class OptionsWindow {
     JTabbedPane tabOptions = new JTabbedPane();
     tabOptions.addTab("Haskell Interpreter", panelInterpreter);
     tabOptions.addTab("Property Tests", panelTest);
-    tabOptions.addTab("Font Sizes", panelFontSizes);
+    tabOptions.addTab("Accessibility", panelFontSizes);
 	if (accOptions) {
 		tabOptions.setSelectedIndex(2);
 	}
@@ -227,6 +243,7 @@ public class OptionsWindow {
     jTextFieldTestPositive.setText(sm.getSetting(Settings.TEST_POSITIVE));
     jcbOutputFontSize.setSelectedItem(sm.getSetting(Settings.OUTPUT_FONT_SIZE));
     jcbCodeFontSize.setSelectedItem(sm.getSetting(Settings.CODE_FONT_SIZE));
+    jcbConsoleFontStyle.setSelectedItem(sm.getSetting(Settings.CONSOLE_FONT_STYLE));
   }
 
  
@@ -281,6 +298,14 @@ public class OptionsWindow {
    */
   public String getCodeFontSize() {
     return (String) jcbCodeFontSize.getSelectedItem();
+  }
+  /**
+   * Returns the desired font style for console
+   *
+   * @return the display window font style
+   */
+  public String getConsoleFontStyle() {
+    return (String) jcbConsoleFontStyle.getSelectedItem();
   }
 
   private void jButton2_actionPerformed(ActionEvent e) {

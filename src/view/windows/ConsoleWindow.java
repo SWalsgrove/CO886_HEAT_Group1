@@ -98,25 +98,24 @@ public class ConsoleWindow {
   }
 
  public void NormalMode() {
-	  jtaInterpreterOutput.repaint();
+	  //jtaInterpreterOutput.repaint();
 	  jtaInterpreterOutput.setBackground(Color.WHITE);
 	  StyleConstants.setForeground(errorText,Color.RED);
 	  StyleConstants.setForeground(infoText,Color.BLUE);
 	  StyleConstants.setForeground(normalText, Color.BLACK);
 	  StyleConstants.setForeground(inputText,Color.DARK_GRAY);
-	  //jspMain.getViewport().add(jtaInterpreterOutput, null);
-	  jtaInterpreterOutput.repaint();
+	  //jtaInterpreterOutput.repaint();
 		  
   }
   
   public void NightMode() {
-	  jtaInterpreterOutput.repaint();
+	  //jtaInterpreterOutput.repaint();
 	  jtaInterpreterOutput.setBackground(Color.DARK_GRAY);
 	  StyleConstants.setForeground(errorText,Color.RED);
 	  StyleConstants.setForeground(infoText,Color.WHITE);
 	  StyleConstants.setForeground(normalText, Color.WHITE);
 	  StyleConstants.setForeground(inputText,Color.CYAN);
-	  //jspMain.getViewport().add(jtaInterpreterOutput, null);
+	 
 	 
 	 }
   

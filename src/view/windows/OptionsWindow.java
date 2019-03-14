@@ -316,16 +316,22 @@ public class OptionsWindow {
 	    if (checkbox.isSelected()) { 
 	  
 	    	wm.getConsoleWindow().NightMode();
+	    	wm.getEditorWindow().ENightMode();
+	    	wm.repaintAll();
+	    
   	
 	    	} else {
 	    		
 	    	wm.getConsoleWindow().NormalMode();
+	    	wm.getEditorWindow().ENormalMode();
+	    	wm.repaintAll();
 	    	
 	    	}
 	    
 	    jColorBlind.setSelected(true);
 		return null;
 	  }
+  
   
   private void jButton2_actionPerformed(ActionEvent e) {
     close();

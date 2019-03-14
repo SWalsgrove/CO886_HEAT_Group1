@@ -33,10 +33,12 @@ import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
+import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
@@ -61,6 +63,7 @@ public class ConsoleWindow {
   private SimpleAttributeSet normalText = new SimpleAttributeSet();
   private SimpleAttributeSet inputText = new SimpleAttributeSet();
   private SimpleAttributeSet promptText = new SimpleAttributeSet();
+  private SimpleAttributeSet background = new SimpleAttributeSet();
   
   private Font displayFont = new Font(Font.MONOSPACED, Font.PLAIN, 12);
   
@@ -98,10 +101,11 @@ public class ConsoleWindow {
     jspMain.setMinimumSize(new Dimension(0, 0));
     jspMain.setPreferredSize(new Dimension(100,150));
     jspMain.setAutoscrolls(true);
-    StyleConstants.setForeground(normalText, Color.BLACK);
+    jtaInterpreterOutput.setBackground(Color.BLACK);
+    StyleConstants.setForeground(normalText, Color.WHITE);
     StyleConstants.setForeground(errorText,Color.RED);
     StyleConstants.setForeground(infoText,Color.BLUE);
-    StyleConstants.setForeground(inputText,Color.DARK_GRAY);
+    StyleConstants.setForeground(inputText,Color.WHITE);
     StyleConstants.setForeground(promptText,new Color(0,150,0));
     StyleConstants.setBold(inputText,true);
     jtaInterpreterOutput.setEditable(true);
@@ -121,11 +125,13 @@ public class ConsoleWindow {
     
     /* Use font size from settings if it exists */
     String fontSize = sm.getSetting(Settings.OUTPUT_FONT_SIZE);
-
-    if ((fontSize != null) && (fontSize != "")) {
+    String fontStyle = sm.getSetting(Settings.CONSOLE_FONT_STYLE);
+    String colorblind = sm.getSetting(Settings.OUTPUT_COLOR_BLIND); //not sure?
+    
+    if ((fontSize != null) && (fontSize != "") && (fontStyle != null)) {
       try {
         int size = Integer.parseInt(fontSize);
-        displayFont = new Font(Font.MONOSPACED, Font.PLAIN, size);
+        displayFont = new Font(fontStyle, Font.PLAIN, size);
       } catch (NumberFormatException nfe) {
         log.warning("[ConsoleWindow] - Failed to parse " +
           Settings.OUTPUT_FONT_SIZE + " setting, check value in settings file");
@@ -133,6 +139,16 @@ public class ConsoleWindow {
     }
 
     jtaInterpreterOutput.setFont(displayFont);
+    
+    
+    
+    //if (colorblind.) {
+    	
+    	//jtaInterpreterOutput.setBackground(Color.BLACK);
+        //StyleConstants.setForeground(normalText, Color.WHITE);
+    	
+    	
+   // }
     
     /* This document filter ensures that the fixed content of the console, 
      * i.e. the initial content up to fixedContentEnd, cannot be modified.
@@ -260,8 +276,8 @@ public class ConsoleWindow {
    *
    * @param ptSize desired font size
    */
-  public void setFontSize(int ptSize) {
-    jtaInterpreterOutput.setFont(new Font(Font.MONOSPACED, Font.PLAIN, ptSize));
+  public void setFontSize(int ptSize, String ptStyle) {
+    jtaInterpreterOutput.setFont(new Font(ptStyle, Font.PLAIN, ptSize));
     jtaInterpreterOutput.repaint();
   }
 
@@ -612,5 +628,11 @@ public class ConsoleWindow {
   public boolean isEnabled() {
 	  return enabled;
   }
+
+
+
+   
+	
 }
-  
+
+

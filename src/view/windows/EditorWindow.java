@@ -201,12 +201,13 @@ public class EditorWindow {
     jtaCodeView = new JEditTextAreaWithMouseWheel();
 
     String fontSizeStr = sm.getSetting(Settings.CODE_FONT_SIZE);
+    String fontStyle = sm.getSetting(Settings.CONSOLE_FONT_STYLE);
 
-    if ((fontSizeStr != null) && (fontSizeStr != "")) {
+    if ((fontSizeStr != null) && (fontSizeStr != "") && (fontStyle != null)) {
       try {
         int size = Integer.parseInt(fontSizeStr);
         fontSize = size;
-        setFontSize(fontSize);
+        setFontSize(fontSize, fontStyle);
       } catch (NumberFormatException nfe) {
         log.warning("[DisplayWindow] - Failed to parse " +
           Settings.CODE_FONT_SIZE + " setting, check value in settings file");
@@ -256,8 +257,8 @@ public class EditorWindow {
    *
    * @param ptSize The new size
    */
-  public void setFontSize(int ptSize) {
-    Font font = new Font("monospaced", Font.PLAIN, ptSize);
+  public void setFontSize(int ptSize, String ptStyle) {
+    Font font = new Font(ptStyle, Font.PLAIN, ptSize);
 
     jtaCodeView.getPainter().setFont(font);
     jtaCodeView.repaint();

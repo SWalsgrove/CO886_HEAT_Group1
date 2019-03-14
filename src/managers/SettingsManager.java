@@ -100,10 +100,12 @@ public class SettingsManager {
     newSettings.setProperty(Settings.LIBRARY_PATH,
       System.getProperty("user.home"));
     newSettings.setProperty(Settings.OUTPUT_FONT_SIZE, "12");
+    newSettings.setProperty(Settings.CONSOLE_FONT_STYLE, "Monospaced");
     newSettings.setProperty(Settings.CODE_FONT_SIZE, "14");
     newSettings.setProperty(Settings.INTERPRETER_OPTS,"");
     newSettings.setProperty(Settings.TEST_FUNCTION,"");
     newSettings.setProperty(Settings.TEST_POSITIVE,"True");
+    newSettings.setProperty(Settings.OUTPUT_COLOR_BLIND,"True");
     return newSettings;
   }
   

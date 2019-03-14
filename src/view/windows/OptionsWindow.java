@@ -29,12 +29,15 @@ import view.dialogs.FileDialogs;
 
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.io.File;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -43,6 +46,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import javax.swing.text.StyleConstants;
 
 
 /**
@@ -58,6 +62,8 @@ public class OptionsWindow {
   private JTextField jTextFieldTestPositive;
   private JComboBox jcbOutputFontSize;
   private JComboBox jcbCodeFontSize;
+  private JComboBox jcbConsoleFontStyle;
+  private JCheckBox jColorBlind;
   private JDialog dialog;
 
   private SettingsManager sm = SettingsManager.getInstance();
@@ -133,11 +139,22 @@ public class OptionsWindow {
     testPositive.add(jTextFieldTestPositive);
     panelTest.add(testPositive);
     
-    // panel for setting font sizes
+    // panel for accessbility settings font type, font size, and colorblind
     JPanel panelFontSizes = new JPanel(new GridLayout(0,1));
     jcbOutputFontSize = new JComboBox();
     jcbCodeFontSize = new JComboBox();
- /* Populate the font size combo boxes */
+    jcbConsoleFontStyle= new JComboBox();
+    jColorBlind = new JCheckBox();
+    
+   //Populate the font style combo box with dyslexia friendly options
+    
+    String[] fonts = {"Monospaced", "Arial","Helvetica","Verdana", "Serif"};
+
+    for (int i = 0; i < fonts.length; i++) {
+    jcbConsoleFontStyle.addItem(String.valueOf(fonts[i]));
+    }
+    
+  /*Populate the font size combo boxes */
     for (int i = 10; i < 25; i++) {
       jcbOutputFontSize.addItem(String.valueOf(i));
       jcbCodeFontSize.addItem(String.valueOf(i));
@@ -148,14 +165,28 @@ public class OptionsWindow {
     JPanel interpreterFontSize = new JPanel();
     interpreterFontSize.add(new JLabel("Interpreter font size:"));
     interpreterFontSize.add(jcbOutputFontSize);
+    JPanel consoleFontStyle = new JPanel();
+    consoleFontStyle.add(new JLabel("Editor font style:"));
+    consoleFontStyle.add(jcbConsoleFontStyle);
+    JPanel outputColorBlind = new JPanel();
+    outputColorBlind.add(new JLabel("Color Blind Mode"));
+    outputColorBlind.add(jColorBlind);
+    panelFontSizes.add(consoleFontStyle);
     panelFontSizes.add(editorFontSize);
     panelFontSizes.add(interpreterFontSize);
+    panelFontSizes.add(outputColorBlind);
+    
+
+    		
+    
     
     // combine panels on tabbed pane
     JTabbedPane tabOptions = new JTabbedPane();
     tabOptions.addTab("Haskell Interpreter", panelInterpreter);
     tabOptions.addTab("Property Tests", panelTest);
-    tabOptions.addTab("Font Sizes", panelFontSizes);
+    tabOptions.addTab("Accessibility", panelFontSizes);
+  
+    
     
     // buttons for applying options and cancellation
     JButton buttonApply = new JButton("Apply");
@@ -213,6 +244,7 @@ public class OptionsWindow {
     jTextFieldTestPositive.setText(sm.getSetting(Settings.TEST_POSITIVE));
     jcbOutputFontSize.setSelectedItem(sm.getSetting(Settings.OUTPUT_FONT_SIZE));
     jcbCodeFontSize.setSelectedItem(sm.getSetting(Settings.CODE_FONT_SIZE));
+    jcbConsoleFontStyle.setSelectedItem(sm.getSetting(Settings.CONSOLE_FONT_STYLE));
   }
 
  
@@ -268,7 +300,38 @@ public class OptionsWindow {
   public String getCodeFontSize() {
     return (String) jcbCodeFontSize.getSelectedItem();
   }
+  /**
+   * Returns the desired font style for console
+   *
+   * @return the display window font style
+   */
+  public String getConsoleFontStyle() {
+    return (String) jcbConsoleFontStyle.getSelectedItem();
+  }
 
+  public String CheckBox_Performed() {
+	  	
+	  	
+	    JCheckBox checkbox = (JCheckBox) jColorBlind;
+	    if (checkbox.isSelected()) {
+	    	System.out.println("Checkbox is clicked");
+	    	checkbox.setBackground(Color.RED);
+
+//how to link this?
+	    	//jtaInterpreterOutput.setBackground(Color.BLACK);
+	        //StyleConstants.setForeground(normalText, Color.WHITE);
+	    
+	    	
+	    	} else {
+	    		
+	    	System.out.println("Checkbox is unclicked")	;
+	    		
+	    	}
+	    
+	    jColorBlind.setSelected(true);
+		return null;
+	  }
+  
   private void jButton2_actionPerformed(ActionEvent e) {
     close();
   }
@@ -277,7 +340,6 @@ public class OptionsWindow {
 //    close();
 //  }
 
-  
   /**
    * Browse for an interpreter file with full path
    */

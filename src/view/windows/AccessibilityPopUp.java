@@ -47,7 +47,9 @@ public class AccessibilityPopUp {
 	    yes.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	          OptionsWindow opt = wm.getOptionsWindow();
-	          sm.saveSettings();
+	          if (disable.isSelected()) {
+	        	  sm.saveSettings();
+	          }
 	          accPopUp.dispose();
 	          opt.showAcc();
 	          
@@ -60,7 +62,9 @@ public class AccessibilityPopUp {
 	    no.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	          accPopUp.dispose();
-	          sm.saveSettings();
+	          if (disable.isSelected()) {
+	        	  sm.saveSettings();
+	          }
 	        }
 	      });
 	    

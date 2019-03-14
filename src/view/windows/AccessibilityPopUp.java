@@ -22,9 +22,12 @@ public class AccessibilityPopUp {
 	private WindowManager wm = WindowManager.getInstance();
 	
 	private JFrame accPopUp = new JFrame("Visual Accessibility Options");
+	private JCheckBox disable = new JCheckBox("Do not show this dialog box again");
+	private String disabled = sm.getSetting(Settings.ACCESSIBILITY_POP_UP);
 	
 	public AccessibilityPopUp() {
 		
+		if (disabled.equals("False")) {
 		accPopUp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		accPopUp.setBounds(0,0, 830, 500);
 		Container cont = accPopUp.getContentPane();
@@ -44,8 +47,10 @@ public class AccessibilityPopUp {
 	    yes.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	          OptionsWindow opt = wm.getOptionsWindow();
+	          sm.saveSettings();
 	          accPopUp.dispose();
 	          opt.showAcc();
+	          
 	        }
 	      }); 
 		
@@ -55,6 +60,7 @@ public class AccessibilityPopUp {
 	    no.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	          accPopUp.dispose();
+	          sm.saveSettings();
 	        }
 	      });
 	    
@@ -78,10 +84,12 @@ public class AccessibilityPopUp {
 		bottom.setHorizontalAlignment(JLabel.CENTER);
 		
 		JPanel checkBox = new JPanel();
-		JCheckBox notShow = new JCheckBox("Do not show this dialog box again");
-		checkBox.add(notShow);
+		checkBox.add(disable);
 		checkBox.setBounds(0, 350, 800, 100);
 		checkBox.setFont(new Font("SansSerif", Font.PLAIN, 20));
+		Handler handler = new Handler();
+		disable.setSelected(false);
+		disable.addItemListener(handler);
 		
 	    buttons.add(yes);
 	    buttons.add(no);
@@ -93,6 +101,7 @@ public class AccessibilityPopUp {
 		cont.add(checkBox);
 		centre(accPopUp);
 		accPopUp.setVisible(true);
+		}
 	}
 
 	public void centre(JFrame f) {
@@ -102,6 +111,18 @@ public class AccessibilityPopUp {
 		int x = (d.width - w) / 2;
 		int y = (d.height - h) / 2;
 		f.setLocation(x, y);
+	}
+	
+	private class Handler implements ItemListener {
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			if (disable.isSelected()) {
+				sm.setSetting(Settings.ACCESSIBILITY_POP_UP,"True");
+			}
+			
+		}
+		
 	}
 	
 }

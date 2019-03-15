@@ -29,6 +29,7 @@ import view.dialogs.FileDialogs;
 
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
@@ -36,6 +37,7 @@ import java.awt.event.ActionListener;
 
 import java.io.File;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -44,6 +46,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import javax.swing.text.StyleConstants;
 
 
 /**
@@ -60,6 +63,7 @@ public class OptionsWindow {
   private JComboBox jcbOutputFontSize;
   private JComboBox jcbCodeFontSize;
   private JComboBox jcbConsoleFontStyle;
+  private JCheckBox jColorBlind;
   private JDialog dialog;
   private boolean accOptions = false;
 
@@ -136,11 +140,12 @@ public class OptionsWindow {
     testPositive.add(jTextFieldTestPositive);
     panelTest.add(testPositive);
     
-    // panel for setting font sizes and font styles
+    // panel for accessbility settings font type, font size, and colorblind
     JPanel panelFontSizes = new JPanel(new GridLayout(0,1));
     jcbOutputFontSize = new JComboBox();
     jcbCodeFontSize = new JComboBox();
     jcbConsoleFontStyle= new JComboBox();
+    jColorBlind = new JCheckBox();
     
    //Populate the font style combo box with dyslexia friendly options
     
@@ -164,9 +169,17 @@ public class OptionsWindow {
     JPanel consoleFontStyle = new JPanel();
     consoleFontStyle.add(new JLabel("Editor font style:"));
     consoleFontStyle.add(jcbConsoleFontStyle);
+    JPanel outputColorBlind = new JPanel();
+    outputColorBlind.add(new JLabel("Color Blind Mode"));
+    outputColorBlind.add(jColorBlind);
     panelFontSizes.add(consoleFontStyle);
     panelFontSizes.add(editorFontSize);
     panelFontSizes.add(interpreterFontSize);
+    panelFontSizes.add(outputColorBlind);
+    
+
+    		
+    
     
     // combine panels on tabbed pane
     JTabbedPane tabOptions = new JTabbedPane();
@@ -308,6 +321,30 @@ public class OptionsWindow {
     return (String) jcbConsoleFontStyle.getSelectedItem();
   }
 
+  public String CheckBox_Performed() {
+	  	
+	  	
+	    JCheckBox checkbox = (JCheckBox) jColorBlind;
+	    if (checkbox.isSelected()) { 
+	  
+	    	wm.getConsoleWindow().NightMode();
+	    	wm.getEditorWindow().ENightMode();
+	    	wm.repaintAll();
+	    
+  	
+	    	} else {
+	    		
+	    	wm.getConsoleWindow().NormalMode();
+	    	wm.getEditorWindow().ENormalMode();
+	    	wm.repaintAll();
+	    	
+	    	}
+	    
+	    jColorBlind.setSelected(true);
+		return null;
+	  }
+  
+  
   private void jButton2_actionPerformed(ActionEvent e) {
     close();
   }
@@ -316,7 +353,6 @@ public class OptionsWindow {
 //    close();
 //  }
 
-  
   /**
    * Browse for an interpreter file with full path
    */

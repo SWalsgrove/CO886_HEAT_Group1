@@ -702,6 +702,7 @@ public class ActionManager {
       String libraryPath = wm.getOptionsWindow().getLibraryPath();
       String outputFontSize = wm.getOptionsWindow().getOuputFontSize();
       String outputFontStyle = wm.getOptionsWindow().getConsoleFontStyle();
+      String outputColorBlind = wm.getOptionsWindow().CheckBox_Performed();
       String codeFontSize = wm.getOptionsWindow().getCodeFontSize();
       SettingsManager sm = SettingsManager.getInstance();
       InterpreterManager im = InterpreterManager.getInstance();
@@ -721,8 +722,10 @@ public class ActionManager {
       /* Perform any font updates */
       try {
         int outputFontsize = Integer.parseInt(outputFontSize);
-        wm.getConsoleWindow().setFontSize(outputFontsize, outputFontStyle);
+        wm.getConsoleWindow().setFontSize(outputFontsize,outputFontStyle);
         sm.setSetting(Settings.OUTPUT_FONT_SIZE, outputFontSize);
+        sm.setSetting(Settings.CONSOLE_FONT_STYLE, outputFontStyle);
+        //sm.setSetting(Settings.OUTPUT_COLOR_BLIND, outputColorBlind);
       } catch (NumberFormatException nfe) {
         log.warning("[ActionManager] - Failed to parse " +
           Settings.OUTPUT_FONT_SIZE + " setting from options window");
@@ -732,6 +735,8 @@ public class ActionManager {
         int codeFontsize = Integer.parseInt(codeFontSize);
         wm.getEditorWindow().setFontSize(codeFontsize, outputFontStyle);
         sm.setSetting(Settings.CODE_FONT_SIZE, codeFontSize);
+        sm.setSetting(Settings.CONSOLE_FONT_STYLE, outputFontStyle);
+        //sm.setSetting(Settings.EDITOR_COLOR_BLIND, outputColorBlind);
       } catch (NumberFormatException nfe) {
         log.warning("[ActionManager] - Failed to parse " +
           Settings.CODE_FONT_SIZE + " setting from options window");

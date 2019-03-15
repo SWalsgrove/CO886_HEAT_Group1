@@ -28,13 +28,15 @@ import utils.Settings;
 import view.dialogs.FileDialogs;
 
 import java.awt.GridLayout;
+import java.awt.Robot;
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -47,6 +49,7 @@ import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.text.StyleConstants;
+import java.io.IOException;
 
 
 /**
@@ -65,6 +68,7 @@ public class OptionsWindow {
   private JComboBox jcbConsoleFontStyle;
   private JCheckBox jColorBlind;
   private JDialog dialog;
+  private boolean magActive = false;
   private boolean accOptions = false;
 
   private SettingsManager sm = SettingsManager.getInstance();
@@ -172,11 +176,45 @@ public class OptionsWindow {
     JPanel outputColorBlind = new JPanel();
     outputColorBlind.add(new JLabel("Color Blind Mode"));
     outputColorBlind.add(jColorBlind);
+    
+    // add magnifier button
+    
+    JPanel magnifier = new JPanel();
+    JButton magnify = new JButton("Toggle Magnifier");
+    magnify.setToolTipText("Toggles Windows Magnifier Tool");
+    magnify.addActionListener(new ActionListener() {
+	    // toggles Windows Magnifier.
+    	public void actionPerformed(ActionEvent e) {
+	    	if (!magActive) {	
+	    		try {
+	        		Process p = Runtime.getRuntime().exec("cmd /c magnify.exe");
+	        		magActive = true;
+	        	} 
+				catch (IOException e1) {
+	        		e1.printStackTrace();
+	        	}
+	    	} else {
+    		try {
+    	        Robot robot = new Robot();
+    	        robot.keyPress(KeyEvent.VK_WINDOWS);
+    	        robot.keyPress(KeyEvent.VK_ESCAPE);
+    	        robot.keyRelease(KeyEvent.VK_ESCAPE);
+    	        robot.keyRelease(KeyEvent.VK_WINDOWS);
+    	        magActive = false;
+
+	    	} catch (AWTException f) {
+	    	        f.printStackTrace();
+	    	}
+	    	}
+	    }
+        
+    });
     panelFontSizes.add(consoleFontStyle);
     panelFontSizes.add(editorFontSize);
     panelFontSizes.add(interpreterFontSize);
     panelFontSizes.add(outputColorBlind);
-    
+    magnifier.add(magnify);
+    panelFontSizes.add(magnifier);
 
     		
     

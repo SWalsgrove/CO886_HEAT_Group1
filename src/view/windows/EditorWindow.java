@@ -28,10 +28,11 @@ import utils.jsyntax.JEditTextAreaWithMouseWheel;
 import utils.jsyntax.tokenmarker.HaskellTokenMarker;
 import utils.jsyntax.tokenmarker.LHSHaskellTokenMarker;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.*;
 import javax.swing.KeyStroke;
-
+import javax.swing.text.StyleConstants;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -139,7 +140,7 @@ public class EditorWindow {
  }
 
   /**
-   * Get the JEditTextArea associated with this windoe
+   * Get the JEditTextArea associated with this window
    *
    * @return The JEditTextArea in use
    */
@@ -180,8 +181,7 @@ public class EditorWindow {
     return jtaCodeView.getLineText(lineNumber);
   }
   
-  
-
+ 
   /**
    * Clears the line mark
    */
@@ -189,6 +189,7 @@ public class EditorWindow {
     jtaCodeView.getPainter().clearLineMark();
     jtaCodeView.repaint();
   }
+  
 
   /**
    * Sets up the GUI
@@ -201,12 +202,14 @@ public class EditorWindow {
     jtaCodeView = new JEditTextAreaWithMouseWheel();
 
     String fontSizeStr = sm.getSetting(Settings.CODE_FONT_SIZE);
+    String fontStyle = sm.getSetting(Settings.CONSOLE_FONT_STYLE);
+    String colorblind = sm.getSetting(Settings.EDITOR_COLOR_BLIND);
 
-    if ((fontSizeStr != null) && (fontSizeStr != "")) {
+    if ((fontSizeStr != null) && (fontSizeStr != "") && (fontStyle != null)) {
       try {
         int size = Integer.parseInt(fontSizeStr);
         fontSize = size;
-        setFontSize(fontSize);
+        setFontSize(fontSize, fontStyle);
       } catch (NumberFormatException nfe) {
         log.warning("[DisplayWindow] - Failed to parse " +
           Settings.CODE_FONT_SIZE + " setting, check value in settings file");
@@ -250,14 +253,32 @@ public class EditorWindow {
     setEnabled(false);
 }
  
+  
+  public void ENormalMode() {
+	  //jtaCodeView.repaint();
+	  jtaCodeView.getPainter().setBackground(Color.WHITE);
+	 
+
+	  //jtaCodeView.repaint();
+		  
+  }
+  
+  public void ENightMode() {
+	  //jtaCodeView.repaint();
+	  jtaCodeView.getPainter().setBackground(Color.darkGray);
+	  jtaCodeView.getPainter().setForeground(Color.WHITE);
+	  //jtaCodeView.repaint();;
+	 
+	 
+	 }
 
   /**
    * Changes the font size
    *
    * @param ptSize The new size
    */
-  public void setFontSize(int ptSize) {
-    Font font = new Font("monospaced", Font.PLAIN, ptSize);
+  public void setFontSize(int ptSize, String ptStyle) {
+    Font font = new Font(ptStyle, Font.PLAIN, ptSize);
 
     jtaCodeView.getPainter().setFont(font);
     jtaCodeView.repaint();

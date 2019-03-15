@@ -46,7 +46,26 @@ public class Settings {
    * The font size used in the display window
    */
   public static final String CODE_FONT_SIZE = "CODE_FONT_SIZE";
+  
+  /**
+   * The font style used in the display window
+   */
+  public static final String CONSOLE_FONT_STYLE = "CONSOLE_FONT_STYLE";
+  
+  /**
+   * Whether or not the Accessibility pop-up has been disabled
+   */
+  public static final String ACCESSIBILITY_POP_UP = "ACCESSIBILITY_POP_UP";
 
+  /**
+   * Color Blind mode used in the display window
+   */
+  public static final String OUTPUT_COLOR_BLIND = "OUTPUT_COLOR_BLIND";
+  
+  /**
+   * Color Blind mode used in the editor window
+   */
+  public static final String EDITOR_COLOR_BLIND = "OUTPUT_COLOR_BLIND";
   /*
    * For Boolean unit tests or QuickCheck
    */

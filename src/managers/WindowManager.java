@@ -588,8 +588,10 @@ public class WindowManager {
    *
    * @param ptSize the desired font size
    */
-  public void setDefaultFontSize(int ptSize) {
-    getConsoleWindow().setFontSize(ptSize);
+
+  public void setDefaultFontSize(int ptSize, String ptStyle) {
+    getConsoleWindow().setFontSize(ptSize, ptStyle);
+
   }
 
   /**
